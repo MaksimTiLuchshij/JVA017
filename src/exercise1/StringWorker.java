@@ -1,12 +1,18 @@
 package exercise1;
 
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+enum StopWords{
+    STOP,
+    EXIT,
+    END
+}
 public class StringWorker {
     private static final Scanner input = new Scanner(System.in);
-    private static final String EXIT = "exit";
     private List<String> inputStrings = new ArrayList<>();
     private String delimiter;
     private void enterData(){
@@ -14,8 +20,14 @@ public class StringWorker {
         while (true){
             System.out.println("Input a string: ");
             inputString = input.nextLine();
-            if (inputString.equals(EXIT))
+
+            if (!isUTF8(inputString)){
+                System.out.println("Неверная кодировка, перезапустите программу и повторите");
+            }
+
+            if (isStopWord(inputString))
                 break;
+
             inputStrings.add(inputString);
         }
     }
@@ -41,6 +53,23 @@ public class StringWorker {
 
     private String getDelimiter() {
         return delimiter;
+    }
+
+    private boolean isUTF8(String string){
+        byte[] bytes = string.getBytes(StandardCharsets.UTF_8);
+        String decodedStr = new String(bytes, StandardCharsets.UTF_8);
+        if(string.equals(decodedStr))
+            return true;
+        else
+            return false;
+    }
+
+    private boolean isStopWord(String string){
+        var isStopWord = false;
+        for(StopWords stopWord: StopWords.values()){
+            isStopWord = (string.equals(stopWord.name())) ? true : false;
+        }
+        return isStopWord;
     }
 
     public void runFunction(){
