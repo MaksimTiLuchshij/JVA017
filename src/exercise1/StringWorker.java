@@ -67,7 +67,10 @@ public class StringWorker {
     private boolean isStopWord(String string){
         var isStopWord = false;
         for(StopWords stopWord: StopWords.values()){
-            isStopWord = (string.equals(stopWord.name())) ? true : false;
+            if (string.equals(stopWord.name())){
+                isStopWord = true;
+                return isStopWord;
+            }
         }
         return isStopWord;
     }
