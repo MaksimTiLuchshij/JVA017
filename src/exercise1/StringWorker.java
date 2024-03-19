@@ -38,13 +38,13 @@ public class StringWorker {
     }
 
     private String returnResult(List<String> inputStrings, String delimiter){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for(String str: inputStrings){
-            result += str;
+            result.append(str);
             if (inputStrings.indexOf(str) != inputStrings.size() - 1)
-                result += delimiter;
+                result.append(delimiter);
         }
-        return result;
+        return result.toString();
     }
 
     private List<String> getInputStrings() {
